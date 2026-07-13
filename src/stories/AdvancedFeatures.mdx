@@ -1,0 +1,51 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Guide/Advanced Features" />
+
+# Advanced Storybook Features — Pokédex
+
+A practice project wiring **shadcn/ui + Tailwind v4** components against the
+[PokeAPI](https://pokeapi.co/). Every technique below maps to a real story you
+can open in the sidebar.
+
+## Architecture
+
+```
+src/
+├─ components/ui/        shadcn primitives (Button, Card, Badge, …)
+├─ components/pokemon/   shared presentational components (props-only)
+├─ components/layout/    app shell (SiteHeader)
+├─ containers/           connected components that fetch from PokeAPI
+├─ pages/                full-page composition
+├─ hooks/                usePokedex, usePokemon (data fetching)
+├─ lib/                  pokeapi client + formatting helpers
+└─ mocks/                domain fixtures + MSW handlers
+```
+
+Presentational components never fetch — they take props. Containers own the
+network. That seam is what makes the stories easy to mock.
+
+## Feature map
+
+| Feature | Where to see it |
+| --- | --- |
+| **Args & argTypes controls** (select, range, color) | `Pokemon/TypeBadge`, `Pokemon/StatBar` |
+| **Autodocs** (auto-generated docs pages) | any story tagged `autodocs` |
+| **Action spies** with `fn()` | `Pokemon/PokemonCard` |
+| **Play functions / interaction tests** | `PokemonCard › ClicksAreReported`, `SearchBar › Typing`, `PokemonDetail › SwitchesTabs` |
+| **`step()` grouping in interactions** | `Containers/PokedexContainer › SearchInteraction` |
+| **MSW network mocking** (happy / loading / error) | `Containers/PokedexContainer`, `Containers/PokemonDetailContainer` |
+| **Global toolbar + decorator** (light/dark theme) | the **Theme** toolbar control (top bar) |
+| **Layout & viewport parameters** | `Pages/PokedexPage › Mobile` |
+| **Component state matrix** | `UI/Button › Matrix`, `Pokemon/TypeBadge › AllTypes` |
+| **a11y checks** | the **Accessibility** panel on any story |
+| **Portable stories as Vitest tests** | play functions run in `npm run test` via the Vitest addon |
+
+## Try it
+
+1. Toggle the **Theme** control in the toolbar — the whole canvas re-themes via
+   a single global decorator in `.storybook/preview.tsx`.
+2. Open `Containers/PokedexContainer` and switch between `Default`, `Loading`,
+   and `ApiError` — no real network calls; MSW serves fixtures.
+3. Open any story with a **Play** tab and watch the interaction test replay
+   step-by-step in the **Interactions** panel.
