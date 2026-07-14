@@ -25,3 +25,17 @@ dist-ssr
 
 *storybook.log
 storybook-static
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+/playwright_chromiumdev_profile-*
+/playwright-transform-cache-*
+
+# Storybook
+node-compile-cache
+storybook-static
+

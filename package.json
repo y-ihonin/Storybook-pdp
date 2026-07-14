@@ -9,13 +9,16 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "screen-diff-docker": "concurrently -k \"npm run storybook\" \"docker run -w /tmp --ipc=host --entrypoint=npx --mount type=bind,src=$(pwd),dst=/tmp --rm mcr.microsoft.com/playwright:v1.61.1-jammy playwright test --timeout=360000\"",
+    "screen-diff-docker-update": "concurrently -k \"npm run storybook\" \"docker run -w /tmp --ipc=host --entrypoint=npx --mount type=bind,src=$(pwd),dst=/tmp --rm mcr.microsoft.com/playwright:v1.61.1-jammy playwright test --timeout=360000 --update-snapshots\""
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.2",
     "axios": "^1.18.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "concurrently": "^10.0.3",
     "lucide-react": "^1.24.0",
     "next-themes": "^0.4.6",
     "radix-ui": "^1.6.2",
@@ -28,6 +31,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^5.2.1",
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.61.1",
     "@storybook/addon-a11y": "^10.5.0",
     "@storybook/addon-docs": "^10.5.0",
     "@storybook/addon-vitest": "^10.5.0",
