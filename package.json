@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "screen-diff-ci": "npx playwright test -c playwright.config.ci.ts --timeout=360000",
     "screen-diff-docker": "concurrently -k \"npm run storybook\" \"docker run -w /tmp --ipc=host --entrypoint=npx --mount type=bind,src=$(pwd),dst=/tmp --rm mcr.microsoft.com/playwright:v1.61.1-jammy playwright test --timeout=360000\"",
     "screen-diff-docker-update": "concurrently -k \"npm run storybook\" \"docker run -w /tmp --ipc=host --entrypoint=npx --mount type=bind,src=$(pwd),dst=/tmp --rm mcr.microsoft.com/playwright:v1.61.1-jammy playwright test --timeout=360000 --update-snapshots\""
   },
